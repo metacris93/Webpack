@@ -3,6 +3,8 @@ const HtmlWebpackPLugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const DotEnv = require('dotenv-webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer');
+
 
 module.exports = {
     entry: ["whatwg-fetch","core-js/stable","./src/index.js"],
@@ -12,6 +14,7 @@ module.exports = {
         assetModuleFilename: 'assets/images/[hash][ext][query]',
     },
     mode: 'development',
+    devtool: 'source-map',
     resolve: {
         extensions: ['.js'],
         alias: {
@@ -21,6 +24,7 @@ module.exports = {
             '@images': path.resolve(__dirname, 'src/assets/images/'),
         }
     },
+    target: ['web', 'es5'],
     module: {
         rules: [
             {
@@ -74,6 +78,7 @@ module.exports = {
             ]
         }),
         new DotEnv(),
+        new BundleAnalyzerPlugin(),
     ],
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
